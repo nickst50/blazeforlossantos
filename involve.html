@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Involved | Blaze Herbington For Mayor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;1,400&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --dark-green: #1B3A2A;
+    --deep-green: #0D2218;
+    --cream: #F0EAD6;
+    --dark: #0A0A08;
+    --mid: #1A1A14;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--dark); color: var(--cream); font-family: "Barlow", sans-serif; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,10,8,0.95); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--gold);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 60px;
+  }
+  .nav-logo { font-family: "Bebas Neue", sans-serif; font-size: 1.4rem; letter-spacing: 0.1em; color: var(--gold); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--cream); text-decoration: none; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+  .page-hero {
+    padding: 9rem 6rem 4rem;
+    background: var(--deep-green);
+    border-bottom: 2px solid var(--gold);
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: "SPEAK UP";
+    position: absolute; right: -1rem; top: 50%; transform: translateY(-50%);
+    font-family: "Bebas Neue", sans-serif; font-size: 14vw; line-height: 1;
+    color: rgba(201,168,76,0.05); pointer-events: none; letter-spacing: -0.02em; white-space: nowrap;
+  }
+  .page-eyebrow { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .page-title { font-family: "Bebas Neue", sans-serif; font-size: clamp(3.5rem, 8vw, 7rem); line-height: 0.9; color: var(--cream); margin-bottom: 1.5rem; }
+  .page-subtitle { font-family: "Playfair Display", serif; font-size: 1.3rem; font-style: italic; color: var(--gold-light); max-width: 560px; line-height: 1.6; }
+
+  .form-section { padding: 5rem 6rem; max-width: 900px; margin: 0 auto; }
+
+  .form-intro { margin-bottom: 3rem; }
+  .form-intro p { font-size: 1rem; line-height: 1.8; color: rgba(240,234,214,0.75); max-width: 640px; }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+  .form-full { margin-bottom: 1.5rem; }
+
+  .field label {
+    display: block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem;
+  }
+  .field input, .field select, .field textarea {
+    width: 100%; background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.3); border-radius: 2px;
+    color: var(--cream); font-family: "Barlow", sans-serif; font-size: 0.95rem;
+    padding: 0.85rem 1rem; outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--gold); background: rgba(201,168,76,0.06);
+  }
+  .field input::placeholder, .field textarea::placeholder { color: rgba(240,234,214,0.3); }
+  .field select { appearance: none; cursor: pointer; }
+  .field select option { background: var(--mid); color: var(--cream); }
+  .field textarea { resize: vertical; min-height: 160px; }
+
+  .category-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1.5rem;
+  }
+  .cat-option { display: none; }
+  .cat-label {
+    display: block; border: 1px solid rgba(201,168,76,0.3); border-radius: 2px;
+    padding: 0.75rem 1rem; text-align: center; cursor: pointer;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(240,234,214,0.6); transition: all 0.2s;
+  }
+  .cat-option:checked + .cat-label {
+    background: var(--gold); color: var(--dark); border-color: var(--gold);
+  }
+  .cat-label:hover { border-color: var(--gold); color: var(--cream); }
+
+  .field-label-heading {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; display: block;
+  }
+
+  .submit-row { display: flex; align-items: center; gap: 1.5rem; margin-top: 2.5rem; }
+  .btn-submit {
+    background: var(--gold); color: var(--dark);
+    font-family: "Barlow", sans-serif; font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    border: none; padding: 1rem 3rem; border-radius: 2px; cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .submit-note { font-size: 0.8rem; color: rgba(240,234,214,0.4); line-height: 1.6; }
+
+  .success-banner {
+    display: none; background: var(--dark-green); border: 1px solid var(--gold);
+    border-radius: 2px; padding: 2rem 2.5rem; margin-top: 2rem;
+    text-align: center;
+  }
+  .success-banner.visible { display: block; }
+  .success-banner h3 { font-family: "Bebas Neue", sans-serif; font-size: 2rem; color: var(--gold); margin-bottom: 0.5rem; }
+  .success-banner p { font-size: 0.9rem; color: rgba(240,234,214,0.7); }
+
+  .divider { border: none; border-top: 1px solid rgba(201,168,76,0.2); margin: 2.5rem 0; }
+
+  footer {
+    background: var(--deep-green); border-top: 2px solid var(--gold);
+    padding: 2rem 6rem; display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.75rem; color: rgba(240,234,214,0.4); letter-spacing: 0.1em;
+  }
+  footer strong { color: var(--gold); }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { gap: 1rem; }
+    .page-hero { padding: 7rem 2rem 3rem; }
+    .form-section { padding: 3rem 2rem; }
+    .form-grid { grid-template-columns: 1fr; }
+    .category-grid { grid-template-columns: 1fr 1fr; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Blaze Herbington</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="platform.html">Platform</a></li>
+    <li><a href="involve.html" class="active">Get Involved</a></li>
+  </ul>
+</nav>
+
+<div class="page-hero">
+  <div class="page-eyebrow">★ Your Voice Matters ★</div>
+  <h1 class="page-title">Make Your<br>Voice Heard</h1>
+  <p class="page-subtitle">This city belongs to everyone in it. Send Blaze your recommendations — what needs to change, what's working, what's been ignored for too long.</p>
+</div>
+
+<section class="form-section">
+  <div class="form-intro">
+    <p>Whether you're a business owner, a community member, law enforcement, or someone who just wants Los Santos to be better — your input shapes the platform. Every submission is read by the campaign team.</p>
+  </div>
+
+  <div id="rec-form">
+    <div class="form-grid">
+      <div class="field">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" placeholder="Blaze Herbington">
+      </div>
+      <div class="field">
+        <label for="role">Who Are You?</label>
+        <select id="role">
+          <option value="" disabled selected>Select your role</option>
+          <option>Community Member</option>
+          <option>Business Owner</option>
+          <option>Law Enforcement (PD)</option>
+          <option>Gang / Street Representative</option>
+          <option>City Employee</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-full field">
+      <span class="field-label-heading">Topic Area</span>
+      <div class="category-grid">
+        <div>
+          <input class="cat-option" type="radio" name="category" id="cat1" value="Public Safety">
+          <label class="cat-label" for="cat1">Public Safety</label>
+        </div>
+        <div>
+          <input class="cat-option" type="radio" name="category" id="cat2" value="Business & Economy">
+          <label class="cat-label" for="cat2">Business & Economy</label>
+        </div>
+        <div>
+          <input class="cat-option" type="radio" name="category" id="cat3" value="City Reform">
+          <label class="cat-label" for="cat3">City Reform</label>
+        </div>
+        <div>
+          <input class="cat-option" type="radio" name="category" id="cat4" value="Policing & Charges">
+          <label class="cat-label" for="cat4">Policing & Charges</label>
+        </div>
+        <div>
+          <input class="cat-option" type="radio" name="category" id="cat5" value="Community">
+          <label class="cat-label" for="cat5">Community</label>
+        </div>
+        <div>
+          <input class="cat-option" type="radio" name="category" id="cat6" value="Other">
+          <label class="cat-label" for="cat6">Other</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-full field">
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" placeholder="e.g. Reform to gang charge minimums">
+    </div>
+
+    <div class="form-full field">
+      <label for="message">Your Recommendation</label>
+      <textarea id="message" placeholder="Describe what you'd like to see change, what's broken, or what's working. Be as specific as you like — the more detail, the better."></textarea>
+    </div>
+
+    <hr class="divider">
+
+    <div class="submit-row">
+      <button class="btn-submit" onclick="submitForm()">Submit Recommendation</button>
+      <p class="submit-note">All submissions are anonymous unless you choose to share your name. This is a safe space — speak freely.</p>
+    </div>
+
+    <div class="success-banner" id="success">
+      <h3>★ Received ★</h3>
+      <p>Your recommendation has been submitted. The Herbington campaign team will review it. Thank you for making Los Santos better.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>Paid for by <strong>Blaze Herbington for Mayor</strong> &nbsp;•&nbsp; 1 Rockford Drive, Rockford Hills, Los Santos, SA 90210</div>
+  <div><strong>blazeforlossantos.info</strong></div>
+</footer>
+
+<script>
+async function submitForm() {
+  const name = document.getElementById("name").value.trim();
+  const role = document.getElementById("role").value;
+  const subject = document.getElementById("subject").value.trim();
+  const message = document.getElementById("message").value.trim();
+  const categoryEl = document.querySelector('input[name="category"]:checked');
+  const category = categoryEl ? categoryEl.value : "Not specified";
+
+  if (!message) {
+    alert("Please write your recommendation before submitting.");
+    return;
+  }
+
+  const btn = document.querySelector(".btn-submit");
+  btn.textContent = "Sending...";
+  btn.disabled = true;
+
+  const webhookUrl = "https://discord.com/api/webhooks/1510780553060679730/KsgHUN2b9ISIiyfRW2XT-G6iRuXJaQrl1LYl2pDgUcRZOJ7skVd3Teg9WTrJdDpY4YT3";
+
+  const payload = {
+    username: "Blaze for Mayor — Campaign HQ",
+    avatar_url: "https://i.imgur.com/4M34hi2.png",
+    embeds: [{
+      title: "⭐ New Recommendation Submitted",
+      color: 0xC9A84C,
+      fields: [
+        { name: "👤 Name", value: name || "Anonymous", inline: true },
+        { name: "🎭 Role", value: role || "Not specified", inline: true },
+        { name: "📂 Category", value: category, inline: true },
+        { name: "📋 Subject", value: subject || "No subject", inline: false },
+        { name: "💬 Recommendation", value: message, inline: false }
+      ],
+      footer: { text: "blazeforlossantos.info • Rockford Hills Campaign HQ" },
+      timestamp: new Date().toISOString()
+    }]
+  };
+
+  try {
+    const res = await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (res.ok || res.status === 204) {
+      document.getElementById("success").classList.add("visible");
+      document.getElementById("success").scrollIntoView({ behavior: "smooth", block: "center" });
+      document.getElementById("name").value = "";
+      document.getElementById("role").value = "";
+      document.getElementById("subject").value = "";
+      document.getElementById("message").value = "";
+      if (categoryEl) categoryEl.checked = false;
+    } else {
+      alert("Something went wrong. Please try again.");
+    }
+  } catch (err) {
+    alert("Could not connect. Please check your internet and try again.");
+  }
+
+  btn.textContent = "Submit Recommendation";
+  btn.disabled = false;
+}
+</script>
+
+</body>
+</html>

@@ -230,6 +230,42 @@
   </div>
 </section>
 
+<div style="background:var(--deep-green);border-top:2px solid var(--gold);border-bottom:2px solid var(--gold);padding:5rem 6rem;text-align:center;">
+  <div style="font-size:0.7rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">★ Show Your Support ★</div>
+  <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,6rem);line-height:0.95;color:var(--cream);margin-bottom:1rem;">Do I Have<br>Your Vote?</h2>
+  <p style="font-size:1rem;color:rgba(240,234,214,0.7);max-width:480px;margin:0 auto 2.5rem;line-height:1.8;">Stand with Blaze Herbington. Let the campaign know you're with us — every pledge counts.</p>
+
+  <div style="max-width:480px;margin:0 auto;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+      <div>
+        <label style="display:block;font-size:0.65rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;">Your Name</label>
+        <input type="text" id="vote-name" placeholder="Your name" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.3);border-radius:2px;color:var(--cream);font-family:'Barlow',sans-serif;font-size:0.95rem;padding:0.85rem 1rem;outline:none;">
+      </div>
+      <div>
+        <label style="display:block;font-size:0.65rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;">Your Role</label>
+        <select id="vote-role" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(201,168,76,0.3);border-radius:2px;color:var(--cream);font-family:'Barlow',sans-serif;font-size:0.95rem;padding:0.85rem 1rem;outline:none;appearance:none;cursor:pointer;">
+          <option value="" disabled selected>Select role</option>
+          <option style="background:var(--mid);">Community Member</option>
+          <option style="background:var(--mid);">Business Owner</option>
+          <option style="background:var(--mid);">Law Enforcement (PD)</option>
+          <option style="background:var(--mid);">Gang / Street Rep</option>
+          <option style="background:var(--mid);">City Employee</option>
+          <option style="background:var(--mid);">Other</option>
+        </select>
+      </div>
+    </div>
+
+    <button onclick="pledgeVote()" style="width:100%;background:var(--gold);color:var(--dark);font-family:'Barlow',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;border:none;padding:1.1rem 2rem;border-radius:2px;cursor:pointer;transition:background 0.2s;" id="vote-btn">
+      ★ Yes, You Have My Vote ★
+    </button>
+
+    <div id="vote-success" style="display:none;background:var(--dark-green);border:1px solid var(--gold);border-radius:2px;padding:1.5rem;margin-top:1.5rem;text-align:center;">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gold);margin-bottom:0.4rem;">★ Pledge Received ★</div>
+      <p style="font-size:0.9rem;color:rgba(240,234,214,0.7);">You're with Blaze. Together we'll bring real change to Los Santos.</p>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div>Paid for by <strong>Blaze Herbington for Mayor</strong> &nbsp;•&nbsp; 1 Rockford Drive, Rockford Hills, Los Santos, SA 90210</div>
   <div><strong>blazeforlossantos.info</strong></div>
@@ -244,20 +280,14 @@ async function submitForm() {
   const categoryEl = document.querySelector('input[name="category"]:checked');
   const category = categoryEl ? categoryEl.value : "Not specified";
 
-  if (!message) {
-    alert("Please write your recommendation before submitting.");
-    return;
-  }
+  if (!message) { alert("Please write your recommendation before submitting."); return; }
 
   const btn = document.querySelector(".btn-submit");
   btn.textContent = "Sending...";
   btn.disabled = true;
 
-  const webhookUrl = "https://discord.com/api/webhooks/1510780553060679730/KsgHUN2b9ISIiyfRW2XT-G6iRuXJaQrl1LYl2pDgUcRZOJ7skVd3Teg9WTrJdDpY4YT3";
-
   const payload = {
     username: "Blaze for Mayor — Campaign HQ",
-    avatar_url: "https://i.imgur.com/4M34hi2.png",
     embeds: [{
       title: "⭐ New Recommendation Submitted",
       color: 0xC9A84C,
@@ -274,12 +304,9 @@ async function submitForm() {
   };
 
   try {
-    const res = await fetch(webhookUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+    const res = await fetch("https://discord.com/api/webhooks/1510780553060679730/KsgHUN2b9ISIiyfRW2XT-G6iRuXJaQrl1LYl2pDgUcRZOJ7skVd3Teg9WTrJdDpY4YT3", {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
     });
-
     if (res.ok || res.status === 204) {
       document.getElementById("success").classList.add("visible");
       document.getElementById("success").scrollIntoView({ behavior: "smooth", block: "center" });
@@ -288,14 +315,47 @@ async function submitForm() {
       document.getElementById("subject").value = "";
       document.getElementById("message").value = "";
       if (categoryEl) categoryEl.checked = false;
-    } else {
-      alert("Something went wrong. Please try again.");
-    }
-  } catch (err) {
-    alert("Could not connect. Please check your internet and try again.");
-  }
+    } else { alert("Something went wrong. Please try again."); }
+  } catch (err) { alert("Could not connect. Please check your internet and try again."); }
 
   btn.textContent = "Submit Recommendation";
+  btn.disabled = false;
+}
+
+async function pledgeVote() {
+  const name = document.getElementById("vote-name").value.trim();
+  const role = document.getElementById("vote-role").value;
+
+  const btn = document.getElementById("vote-btn");
+  btn.textContent = "Sending...";
+  btn.disabled = true;
+
+  const payload = {
+    username: "Blaze for Mayor — Vote Tracker",
+    embeds: [{
+      title: "🗳️ New Vote Pledge!",
+      color: 0x1B3A2A,
+      fields: [
+        { name: "👤 Name", value: name || "Anonymous", inline: true },
+        { name: "🎭 Role", value: role || "Not specified", inline: true }
+      ],
+      footer: { text: "blazeforlossantos.info • Rockford Hills Campaign HQ" },
+      timestamp: new Date().toISOString()
+    }]
+  };
+
+  try {
+    const res = await fetch("https://discord.com/api/webhooks/1510780562196136006/Y7kjIdG1mRrJhSA0V8EhMaXB3IKfxaY5hyJ-Vatj29fJbNAj8doDy9bnS_cHfqWLH4R4", {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
+    });
+    if (res.ok || res.status === 204) {
+      document.getElementById("vote-success").style.display = "block";
+      document.getElementById("vote-name").value = "";
+      document.getElementById("vote-role").value = "";
+    } else { alert("Something went wrong. Please try again."); }
+  } catch(err) { alert("Could not connect. Please check your internet and try again."); }
+
+  btn.textContent = "★ Yes, You Have My Vote ★";
   btn.disabled = false;
 }
 </script>

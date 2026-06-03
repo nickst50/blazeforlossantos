@@ -38,7 +38,7 @@
     padding: 9rem 6rem 5rem;
     background: var(--deep-green);
     border-bottom: 2px solid var(--gold);
-    text-align: center;
+    text-align: left;
     position: relative; overflow: hidden;
   }
   .page-hero::before {
@@ -245,21 +245,20 @@
 </div>
 
 <!-- CANDIDATE HEADERS -->
-<div class="candidate-headers">
-  <div class="cand-blaze">
-    <div class="cand-name">Blaze<br>Herbington</div>
-    <div class="cand-title">Independent — For Mayor</div>
-    <div class="cand-tags">
+<div style="display:grid;grid-template-columns:1fr 80px 1fr;border-bottom:2px solid var(--gold);">
+  <div style="background:var(--dark-green);padding:3rem 4rem;border-right:1px solid var(--gold);text-align:right;">
+    <div class="cand-name" style="color:var(--cream);">Blaze<br>Herbington</div>
+    <div class="cand-title" style="color:var(--gold);">Independent — For Mayor</div>
+    <div class="cand-tags" style="justify-content:flex-end;">
       <span class="tag tag-gold">Street Roots</span>
       <span class="tag tag-outline-gold">Business Owner</span>
-      <span class="tag tag-outline-gold">The Moore Club</span>
       <span class="tag tag-outline-gold">Community Voice</span>
     </div>
   </div>
-  <div class="vs-divider">VS</div>
-  <div class="cand-neiman">
-    <div class="cand-name">Joseph<br>Neiman</div>
-    <div class="cand-title">City Council — Courts Liaison / Public Defender</div>
+  <div style="background:var(--mid);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--gold);border-right:1px solid var(--gold);">VS</div>
+  <div style="background:#1a1014;padding:3rem 4rem;">
+    <div class="cand-name" style="color:#ccc;">Joseph<br>Neiman</div>
+    <div class="cand-title" style="color:#888;">City Council — Courts Liaison / Public Defender</div>
     <div class="cand-tags">
       <span class="tag tag-outline-red">Career Politician</span>
       <span class="tag tag-outline-red">City Insider</span>
